@@ -12,13 +12,16 @@ class Map extends React.Component {
     constructor(props) {
         super(props);
 
-        let parkingSpotCoords = [];
+        let parkingSpots = [];
 
         getParkingSpots().then((response) => {
             if(response.data) {
                 const records = response.data.records;
                 for(let record of records) {
-                    parkingSpotCoords.push(record.geometry.coordinates);
+                    parkingSpots.push({
+                        coords: record.geometry.coordinates,
+                        availableSpots: record.fields.placal
+                    });
                 }
             }
             
@@ -27,12 +30,12 @@ class Map extends React.Component {
         });
 
         this.state = {
-            markers: parkingSpotCoords
+            spots: parkingSpots
         }
     }
 
     render() {
-        console.log(this.state.markers);
+        console.log(this.state.spots);
         return (
             <Mapbox
                 style="mapbox://styles/mapbox/streets-v9"
@@ -46,8 +49,8 @@ class Map extends React.Component {
                                                 "circle-color": "green",
                                                 "circle-radius": 3,
                                             }}>
-                    {this.state.markers.map((marker, markerIndex) =>
-                        <Feature coordinates={marker} key={markerIndex} />
+                    {this.state.spots.map((spot, spotIndex) =>
+                        <Feature coordinates={spot.coords} key={spotIndex} />
                     )}
                 </Layer>
             </Mapbox>
