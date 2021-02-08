@@ -1,12 +1,12 @@
 import React from 'react';
 
-import MapContainer from "./components/MapContainer";
+import Routes from "./components/Routes";
 import './App.css';
 
 function App() {
   return (
     <div className="main-container">
-      <MapContainer
+      <Routes
       />
     </div>
   );
