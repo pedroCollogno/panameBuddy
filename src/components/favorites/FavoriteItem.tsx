@@ -1,3 +1,4 @@
+import React from "react";
 import {FavoriteStation} from "../../utils/interfaces";
 
 function FavoriteItem(station: FavoriteStation) {

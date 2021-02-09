@@ -10,3 +10,5 @@ function FavoriteList(favorites: Array<FavoriteStation>) {
         </div>
     )
 }
+
+export default FavoriteList;
