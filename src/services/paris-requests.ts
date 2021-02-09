@@ -4,6 +4,6 @@ const API_URL = "http://opendata.paris.fr/api/records/1.0/search/?dataset=statio
 
 export const getParkingSpots = () => {
     return axios.get<Object>(API_URL).then((response: AxiosResponse) => {
-        console.log(response.data);
+        return response.data;
     });
 }
