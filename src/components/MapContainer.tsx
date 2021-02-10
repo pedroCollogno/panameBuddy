@@ -1,17 +1,11 @@
 import React from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
+import { PARIS, PARIS_2, MAP_CENTER } from "../utils/constants";
+
 const containerStyle = {
 	width: "800px",
 	height: "800px",
-};
-
-const PARIS = [2.379853400000002, 48.8648482];
-const PARIS_2 = [2.29, 48.8648482];
-
-const MAP_CENTER = {
-	lat: 48.8648482,
-	lng: 2.339853400000002,
 };
 
 const markers = [
