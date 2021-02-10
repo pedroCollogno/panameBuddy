@@ -1,13 +1,11 @@
 import React from "react";
-import { cleanup, fireEvent, render } from "@testing-library/react";
-import Navbar from "./Navbar";
+import { render, screen } from "@testing-library/react";
 
-afterEach(cleanup);
+import Routes from "./Routes";
 
 it("Navbar displays the right links", () => {
-	const { queryByLabelText, getByLabelText } = render(<Navbar />);
+	render(<Routes />);
 
-	expect(queryByLabelText(/map/i)).toBeTruthy();
-
-	expect(queryByLabelText(/favorite/i)).toBeTruthy();
+	expect(screen.getByText("Map")).toBeInTheDocument();
+	expect(screen.getByText("My favorite stations")).toBeInTheDocument();
 });
