@@ -24,7 +24,7 @@ function Favorites() {
 		<div>
 			<h1>Favorites</h1>
 			<FavoriteList
-				stations={favoriteStations}
+				favorites={favoriteStations}
 				rateStation={rateStation}
 			/>
 		</div>

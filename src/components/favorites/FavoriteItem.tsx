@@ -1,7 +1,12 @@
 import React from "react";
 import { FavoriteStation } from "../../utils/interfaces";
 
-function FavoriteItem(station: FavoriteStation) {
+export interface Props {
+	station: FavoriteStation;
+	rateStation: Function;
+}
+
+function FavoriteItem({ station, rateStation }: Props) {
 	return (
 		<div>
 			<p>{station.name}</p>

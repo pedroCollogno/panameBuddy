@@ -10,8 +10,8 @@ export interface Props {
 function FavoriteList({ favorites, rateStation }: Props) {
 	return (
 		<div>
-			{favorites.map(station => (
-				<FavoriteItem station={station} />
+			{favorites.map((station) => (
+				<FavoriteItem station={station} rateStation={rateStation} />
 			))}
 		</div>
 	);
