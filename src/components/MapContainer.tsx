@@ -1,12 +1,9 @@
 import React from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
-import { PARIS, PARIS_2, MAP_CENTER } from "../utils/constants";
+import "./MapContainer.css";
 
-const containerStyle = {
-	width: "800px",
-	height: "800px",
-};
+import { PARIS, PARIS_2, MAP_CENTER } from "../utils/constants";
 
 const markers = [
 	{ lng: PARIS[0], lat: PARIS[1] },
@@ -31,7 +28,7 @@ function MapContainer() {
 
 	return isLoaded ? (
 		<GoogleMap
-			mapContainerStyle={containerStyle}
+			mapContainerClassName="map-container"
 			center={MAP_CENTER}
 			zoom={12}
 			onLoad={onLoad}
