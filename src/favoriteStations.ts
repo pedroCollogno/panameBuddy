@@ -1,5 +1,3 @@
-const data = [
-    {"name": "test", "rating": 3}
-];
+const data = [{ name: "test", rating: 3 }];
 
 export default data;

@@ -1,4 +1,4 @@
 export interface FavoriteStation {
-    rating: number;
-    name: string;
+	rating: number;
+	name: string;
 }
