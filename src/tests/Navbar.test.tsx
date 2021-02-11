@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 
-import Routes from "./Routes";
+import Routes from "../components/Routes";
 
 it("Navbar displays the right links", () => {
 	render(<Routes />);
