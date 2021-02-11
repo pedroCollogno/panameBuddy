@@ -28,11 +28,20 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 	const [map, setMap] = useState(null);
 
 	const [markers, setMarkers] = useState(testMarkers);
+	const [markerText, setMarkerText] = useState("TEST MARKER");
 	let apiCallSucceeded = false;
 
+	const getData = async () => {
+		const data = await getParkingSpots();
+		return data;
+	};
+
 	useEffect(() => {
-		getParkingSpots()
+		getData()
 			.then((data) => {
+				if (!data) {
+					return false;
+				}
 				const markerInfos: Array<RecordData> = data.records || [];
 				const coordinates = markerInfos.map(
 					({ recordid, geometry }) => {
@@ -44,6 +53,7 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 					}
 				);
 				setMarkers(coordinates);
+				setMarkerText("TRUE MARKER");
 				apiCallSucceeded = true;
 			})
 			.catch((error: AxiosError) => console.log(error));
@@ -77,9 +87,17 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 				))}
 			</GoogleMap>
 			{!apiCallSucceeded && <p>Waiting for Paris API...</p>}
+			{markers.map((marker) => (
+				<p key={marker.recordid}>{markerText}</p>
+			))}
 		</div>
 	) : (
-		<p>Failed to connect to Google Maps API</p>
+		<div>
+			<p>Failed to connect to Google Maps API</p>
+			{markers.map((marker) => (
+				<p key={marker.recordid}>{markerText}</p>
+			))}
+		</div>
 	);
 }
 

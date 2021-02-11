@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { RecordData } from "../utils/interfaces";
 
 const datasetName = "stationnement-voie-publique-emplacements";
 const requiredFieldsQuery =
@@ -7,8 +8,11 @@ const targetTransport = "V%C3%A9los";
 
 const API_URL = `http://opendata.paris.fr/api/records/1.0/search/?dataset=${datasetName}&q=${requiredFieldsQuery}&refine.regpar=${targetTransport}`;
 
-export const getParkingSpots = () => {
-	return axios.get<Object>(API_URL).then((response: AxiosResponse) => {
-		return response.data;
-	});
+interface ResponseData {
+	records: Array<RecordData>;
+}
+
+export const getParkingSpots = async () => {
+	const { data } = await axios.get<ResponseData>(API_URL);
+	return data;
 };
