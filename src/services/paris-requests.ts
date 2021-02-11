@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { RecordData } from "../utils/interfaces";
 
 const datasetName = "stationnement-voie-publique-emplacements";
