@@ -6,17 +6,17 @@ import "./MapContainer.css";
 
 import { PARIS, PARIS_2, MAP_CENTER } from "../utils/constants";
 import { getParkingSpots } from "../services/paris-requests";
-import { RecordData, FavoriteStation } from "../utils/interfaces";
+import { RecordData, FavoriteStation, MarkerData } from "../utils/interfaces";
 
-const testMarkers = {
-	"1": { lng: PARIS[0], lat: PARIS[1] },
-	"2": { lng: PARIS_2[0], lat: PARIS_2[1] },
-};
+const testMarkers = [
+	{ lng: PARIS[0], lat: PARIS[1], recordid: 1 },
+	{ lng: PARIS_2[0], lat: PARIS_2[1], recordid: 2 },
+];
 
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "";
 export interface Props {
-	favoriteStations: Array<FavoriteStation>;
-	rateStation: Function;
+	favoriteStations?: Array<FavoriteStation>;
+	rateStation?: Function;
 }
 
 function MapContainer({ favoriteStations, rateStation }: Props) {
@@ -27,23 +27,22 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 
 	const [map, setMap] = useState(null);
 
-	const [markers, setMarkers] = useState({ ...testMarkers });
+	const [markers, setMarkers] = useState(testMarkers);
 	let apiCallSucceeded = false;
 
 	useEffect(() => {
 		getParkingSpots()
 			.then((data) => {
 				const markerInfos: Array<RecordData> = data.records || [];
-				let coordinates = markerInfos.map(({ recordid, geometry }) => {
-					return [
-						recordid,
-						{
+				const coordinates = markerInfos.map(
+					({ recordid, geometry }) => {
+						return {
 							lat: geometry.coordinates[1],
 							lng: geometry.coordinates[0],
-						},
-					];
-				});
-				coordinates = Object.fromEntries(coordinates);
+							recordid: recordid,
+						};
+					}
+				);
 				setMarkers(coordinates);
 				apiCallSucceeded = true;
 			})
@@ -56,8 +55,8 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 		setMap(null);
 	}, []);
 
-	const onClick = (markerID: string) => {
-		console.log(markerID);
+	const onClick = (marker: MarkerData) => {
+		console.log(marker.recordid);
 	};
 
 	return isLoaded ? (
@@ -69,11 +68,11 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 				onLoad={onLoad}
 				onUnmount={onUnmount}
 			>
-				{Object.entries(markers).map(([markerID, marker]) => (
+				{markers.map((marker) => (
 					<Marker
-						position={marker}
-						key={markerID}
-						onClick={() => onClick(markerID)}
+						position={{ lat: marker.lat, lng: marker.lng }}
+						key={marker.recordid}
+						onClick={() => onClick(marker)}
 					/>
 				))}
 			</GoogleMap>
