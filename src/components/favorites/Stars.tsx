@@ -29,7 +29,7 @@ function Stars({ rating, changeRating }: Props) {
 					key={index}
 					onClick={() => onClickStar(index)}
 				>
-					S<i className="fa fa-home"></i>
+					S<i className="fa fa-lock"></i>
 				</span>
 			))}
 		</div>

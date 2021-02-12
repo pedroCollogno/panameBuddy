@@ -10,17 +10,20 @@ export interface Props {
 
 function FavoriteItem({ station, rateStation }: Props) {
 	const [rating, setRating] = useState(station.rating);
-	function changeRating(e: ChangeEvent<HTMLInputElement>) {
-		const newRating = parseFloat(e.currentTarget.value);
-		rateStation(station, newRating);
+
+	const onChangeRating = (newRating: number) => {
+		newRating += 1;
 		setRating(newRating);
-	}
+		rateStation(station, newRating);
+	};
 
 	return (
 		<div>
 			<p>{station.recordid}</p>
-			<input value={rating} onChange={changeRating} />
-			<Stars rating={rating} />
+			<Stars
+				rating={rating}
+				changeRating={(rating: number) => onChangeRating(rating)}
+			/>
 		</div>
 	);
 }

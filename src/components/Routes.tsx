@@ -32,6 +32,7 @@ function Routes() {
 			station.rating = newRating;
 			newStations.push(station);
 		}
+		console.log(newStations);
 		setFavoriteStations(newStations);
 	}
 
@@ -45,7 +46,12 @@ function Routes() {
 						rateStation={rateStation}
 					/>
 				</Route>
-				<Route exact path="/map" component={MapContainer} />
+				<Route exact path="/map">
+					<MapContainer
+						favoriteStations={favoriteStations}
+						rateStation={rateStation}
+					/>
+				</Route>
 				<Route path="/">
 					<Redirect to="/map" />
 				</Route>

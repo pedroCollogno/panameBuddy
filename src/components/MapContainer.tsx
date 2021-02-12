@@ -81,6 +81,29 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 		setClickedMarkers(newClickedMarkers);
 	};
 
+	const onChangeRating = (newRating: number, marker: MarkerData) => {
+		newRating += 1;
+		if (rateStation) {
+			const station: FavoriteStation = {
+				rating: newRating,
+				recordid: marker.recordid,
+			};
+			rateStation(station, newRating);
+		}
+	};
+
+	const getRating = (marker: MarkerData) => {
+		if (!favoriteStations) {
+			return 0;
+		}
+		for (let station of favoriteStations) {
+			if (station.recordid === marker.recordid) {
+				return station.rating;
+			}
+		}
+		return 0;
+	};
+
 	return isLoaded ? (
 		<div>
 			<GoogleMap
@@ -103,9 +126,9 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 						onCloseClick={() => setClickedMarkers([])}
 					>
 						<Stars
-							rating={3.5}
+							rating={getRating(marker)}
 							changeRating={(rating: number) =>
-								console.log(rating)
+								onChangeRating(rating, marker)
 							}
 						/>
 					</InfoWindow>
