@@ -20,7 +20,7 @@ function Routes() {
 	function rateStation(station: FavoriteStation, newRating: number) {
 		let stationIndex = -1;
 		for (const favoriteStation of favoriteStations) {
-			if (station.name === favoriteStation.name) {
+			if (station.recordid === favoriteStation.recordid) {
 				stationIndex = favoriteStations.indexOf(favoriteStation);
 				break;
 			}

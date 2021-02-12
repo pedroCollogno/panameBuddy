@@ -1,6 +1,6 @@
 export interface FavoriteStation {
 	rating: number;
-	name: string;
+	recordid: number;
 }
 
 interface Geometry {

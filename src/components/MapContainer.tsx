@@ -1,6 +1,13 @@
 import { AxiosError } from "axios";
 import React, { useState, useEffect } from "react";
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import {
+	GoogleMap,
+	useJsApiLoader,
+	Marker,
+	InfoWindow,
+} from "@react-google-maps/api";
+
+import Stars from "./favorites/Stars";
 
 import "./MapContainer.css";
 
@@ -29,6 +36,9 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 
 	const [markers, setMarkers] = useState(testMarkers);
 	const [markerText, setMarkerText] = useState("TEST MARKER");
+
+	const initClickedMarkers: Array<MarkerData> = [];
+	const [clickedMarkers, setClickedMarkers] = useState(initClickedMarkers);
 	let apiCallSucceeded = false;
 
 	const getData = async () => {
@@ -67,6 +77,8 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 
 	const onClick = (marker: MarkerData) => {
 		console.log(marker.recordid);
+		const newClickedMarkers = [marker];
+		setClickedMarkers(newClickedMarkers);
 	};
 
 	return isLoaded ? (
@@ -84,6 +96,19 @@ function MapContainer({ favoriteStations, rateStation }: Props) {
 						key={marker.recordid}
 						onClick={() => onClick(marker)}
 					/>
+				))}
+				{clickedMarkers.map((marker) => (
+					<InfoWindow
+						position={{ lat: marker.lat + 0.01, lng: marker.lng }}
+						onCloseClick={() => setClickedMarkers([])}
+					>
+						<Stars
+							rating={3.5}
+							changeRating={(rating: number) =>
+								console.log(rating)
+							}
+						/>
+					</InfoWindow>
 				))}
 			</GoogleMap>
 			{!apiCallSucceeded && <p>Waiting for Paris API...</p>}

@@ -1,4 +1,6 @@
 import { useState, ChangeEvent } from "react";
+
+import Stars from "./Stars";
 import { FavoriteStation } from "../../utils/interfaces";
 
 export interface Props {
@@ -16,8 +18,9 @@ function FavoriteItem({ station, rateStation }: Props) {
 
 	return (
 		<div>
-			<p>{station.name}</p>
+			<p>{station.recordid}</p>
 			<input value={rating} onChange={changeRating} />
+			<Stars rating={rating} />
 		</div>
 	);
 }
